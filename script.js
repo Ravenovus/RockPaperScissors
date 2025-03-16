@@ -26,27 +26,39 @@ function capitalize(word){
 }
 
 function playRound(humanChoice, computerChoice){
+    let winner = -1;
     console.log("You picked: "+choices[humanChoice]+" Computer picked: "+choices[computerChoice]);
     if(humanChoice == computerChoice){
         console.log("Tied!");
+        winner = 0;
     }
     else if((humanChoice + 2)%3 == computerChoice){
         console.log("You Win! "+ choices[humanChoice]+" beats "+choices[computerChoice]+".");
-        humanScore++;
+        winner = 1;
     }
     else{
         console.log("You Lose! "+ choices[computerChoice]+" beats "+choices[humanChoice]+".");
-        computerScore++;
+        winner = 2;
     }
-    console.log("Current Score:\nYou: "+humanScore+"\nComputer: "+computerScore);
-    return;
+    return winner;
+}
+
+function playGame(){
+    let humanScore = 0;
+    let computerScore = 0;
+    let winner = -1;
+
+    for(let i=0;i<5;i++){
+        const humanChoice = getHumanChoice();
+        const computerChoice = getComputerChoice();
+        winner = playRound(humanChoice,computerChoice);
+        if (winner == 1) humanScore++;
+        else if (winner == 2) computerScore++;
+        winner = -1;
+        console.log("Current Score:\nYou: "+humanScore+"\nComputer: "+computerScore);
+    }
 }
 
 const choices = ["Rock", "Paper", "Scissors"];
-let humanScore = 0;
-let computerScore = 0;
 
-const humanChoice = getHumanChoice();
-const computerChoice = getComputerChoice();
-
-playRound(humanChoice,computerChoice);
+playGame();
